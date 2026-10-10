@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="16.6.8" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Account.GraphQL.Application\Account.GraphQL.Application.csproj" />
     <ProjectReference Include="..\Account.GraphQL.Domain\Account.GraphQL.Domain.csproj" />
   </ItemGroup>
