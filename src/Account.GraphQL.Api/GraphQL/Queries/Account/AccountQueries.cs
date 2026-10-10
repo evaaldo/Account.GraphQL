@@ -1,15 +1,17 @@
-﻿using HotChocolate;
+﻿using Account.GraphQL.Api.GraphQL.Types;
 using Bogus;
+using HotChocolate;
+using HotChocolate.Types;
 
-namespace Account.GraphQL.Api.GraphQL.Schemas
+namespace Account.GraphQL.Api.GraphQL.Queries.AccountQueries
 {
-    public class Query
+    [ExtendObjectType(typeof(Query))]
+    [GraphQLDescription("Provides queries related to account types.")]
+    public class AccountQueries
     {
-
         private readonly Faker<AccountType> _accountFaker;
-        private readonly Faker<StatusType> _statusFaker;
 
-        public Query()
+        public AccountQueries()
         {
             _accountFaker = new Faker<AccountType>()
                 .RuleFor(a => a.Id, f => f.Random.Guid())
@@ -26,24 +28,11 @@ namespace Account.GraphQL.Api.GraphQL.Schemas
                 })
                 .RuleFor(a => a.CreatedAt, f => f.Date.Past())
                 .RuleFor(a => a.UpdatedAt, f => f.Date.Past());
-
-            _statusFaker = new Faker<StatusType>()
-                .RuleFor(s => s.Id, f => f.Random.Guid())
-                .RuleFor(s => s.Name, f => f.Lorem.Word())
-                .RuleFor(s => s.Description, f => f.Lorem.Sentence())
-                .RuleFor(s => s.IsActive, f => f.Random.Bool())
-                .RuleFor(s => s.CreatedAt, f => f.Date.Past())
-                .RuleFor(s => s.UpdatedAt, f => f.Date.Past());
         }
 
         public IEnumerable<AccountType> GetAccounts()
         {
             return _accountFaker.Generate(10);
-        }
-
-        public IEnumerable<StatusType> GetStatus()
-        {
-            return _statusFaker.Generate(5);
         }
 
         public AccountType GetAccountById(Guid id)
@@ -53,8 +42,5 @@ namespace Account.GraphQL.Api.GraphQL.Schemas
 
             return account;
         }
-
-        [GraphQLDeprecated("This query is deprecated")]
-        public string Instructions => "Arrocha esse GraphQL";
     }
 }
