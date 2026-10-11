@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:17@sha256:d74eeac9a635390a49bc21bd49fccd973de707e2a53a76ac49b552b8712ec46f
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: account
+      POSTGRES_USER: account
+      POSTGRES_PASSWORD: account
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"account\" -d \"account\""]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres_data:
