@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:17@sha256:d74eeac9a635390a49bc21bd49fccd973de707e2a53a76ac49b552b8712ec46f
-    container_name: postgres
+    container_name: account-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: account
@@ -18,6 +18,21 @@ services:
       timeout: 3s
       retries: 10
       start_period: 10s
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: account-graphql-api
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=account;Username=account;Password=account
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres_data:
