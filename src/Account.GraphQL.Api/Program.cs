@@ -9,8 +9,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
     .AddTypeExtension<AccountQueries>()
-    .AddTypeExtension<StatusQueries>();
-    //.AddMutationType<Mutation>();
+    .AddTypeExtension<StatusQueries>()
+    .AddMutationType<Mutation>();
 
 var app = builder.Build();
 
