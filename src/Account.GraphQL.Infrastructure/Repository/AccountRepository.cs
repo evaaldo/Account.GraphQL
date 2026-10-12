@@ -1,4 +1,5 @@
 ﻿using Account.GraphQL.Application.Repository;
+using Account.GraphQL.Domain.Domain;
 using Npgsql;
 
 namespace Account.GraphQL.Infrastructure.Repository
@@ -12,7 +13,27 @@ namespace Account.GraphQL.Infrastructure.Repository
             _dataSource = dataSource;
         }
 
-        public Task ListAccounts()
+        public Task<IEnumerable<AccountEntity>> ListAccountsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AccountEntity?> GetAccountByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CreateAccountAsync(AccountEntity account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAccountByIdAsync(int id, AccountEntity account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAccountByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
