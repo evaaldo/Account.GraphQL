@@ -1,4 +1,5 @@
-﻿using Account.GraphQL.Application.Interfaces.Repository;
+﻿using Account.GraphQL.Api.DTOs.Request;
+using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Application.Interfaces.UseCases;
 using Account.GraphQL.Domain.Domain;
 
@@ -13,29 +14,32 @@ namespace Account.GraphQL.Application.UseCases
             _personRepository = personRepository;
         }
 
-        public Task<IEnumerable<PersonEntity>> ListPersonsAsync()
+        public async Task<IEnumerable<PersonEntity>> ListPersonsAsync()
         {
-            throw new NotImplementedException();
+            return await _personRepository.ListPersonsAsync();
         }
 
-        public Task<PersonEntity?> GetPersonByIdAsync(int id)
+        public async Task<PersonEntity?> GetPersonByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var person = await _personRepository.GetPersonByIdAsync(id);
+            return person;
         }
 
-        public Task<int> CreatePersonAsync(PersonEntity person)
+        public async Task<int> CreatePersonAsync(PersonRequestDto person)
         {
-            throw new NotImplementedException();
+            var personEntity = new PersonEntity(person.Name, person.Email, person.Birthdate);
+            return await _personRepository.CreatePersonAsync(personEntity);
         }
 
-        public Task UpdatePersonByIdAsync(int id, PersonEntity person)
+        public async Task UpdatePersonByIdAsync(int id, PersonRequestDto person)
         {
-            throw new NotImplementedException();
+            var personEntity = new PersonEntity(person.Name, person.Email, person.Birthdate);
+            await _personRepository.UpdatePersonByIdAsync(id, personEntity);
         }
 
-        public Task DeletePersonByIdAsync(int id)
+        public async Task DeletePersonByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            await _personRepository.DeletePersonByIdAsync(id);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Account.GraphQL.Application.Interfaces.Repository;
+﻿using Account.GraphQL.Application.DTOs.Request;
+using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Application.Interfaces.UseCases;
 using Account.GraphQL.Domain.Domain;
 
@@ -13,29 +14,31 @@ namespace Account.GraphQL.Application.UseCases
             _statusRepository = statusRepository;
         }
 
-        public Task<IEnumerable<StatusEntity>> ListStatusesAsync()
+        public async Task<IEnumerable<StatusEntity>> ListStatusesAsync()
         {
-            throw new NotImplementedException();
+            return await _statusRepository.ListStatusesAsync();
         }
 
-        public Task<StatusEntity?> GetStatusByIdAsync(int id)
+        public async Task<StatusEntity?> GetStatusByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _statusRepository.GetStatusByIdAsync(id);
         }
 
-        public Task<int> CreateStatusAsync(StatusEntity status)
+        public async Task<int> CreateStatusAsync(StatusRequestDto status)
         {
-            throw new NotImplementedException();
+            var statusEntity = new StatusEntity(status.Status, status.Description, status.IsActive);
+            return await _statusRepository.CreateStatusAsync(statusEntity);
         }
 
-        public Task UpdateStatusByIdAsync(int id, StatusEntity status)
+        public async Task UpdateStatusByIdAsync(int id, StatusRequestDto status)
         {
-            throw new NotImplementedException();
+            var statusEntity = new StatusEntity(status.Status, status.Description, status.IsActive);
+            await _statusRepository.UpdateStatusByIdAsync(id, statusEntity);
         }
 
-        public Task DeleteStatusByIdAsync(int id)
+        public async Task DeleteStatusByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            await _statusRepository.DeleteStatusByIdAsync(id);
         }
     }
 }

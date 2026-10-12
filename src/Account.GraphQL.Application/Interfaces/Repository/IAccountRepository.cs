@@ -1,6 +1,6 @@
 ﻿using Account.GraphQL.Domain.Domain;
 
-namespace Account.GraphQL.Application.Repository
+namespace Account.GraphQL.Application.Interfaces.Repository
 {
     public interface IAccountRepository
     {

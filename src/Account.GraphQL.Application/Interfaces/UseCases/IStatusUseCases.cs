@@ -1,4 +1,5 @@
-﻿using Account.GraphQL.Domain.Domain;
+﻿using Account.GraphQL.Application.DTOs.Request;
+using Account.GraphQL.Domain.Domain;
 
 namespace Account.GraphQL.Application.Interfaces.UseCases
 {
@@ -6,8 +7,8 @@ namespace Account.GraphQL.Application.Interfaces.UseCases
     {
         Task<IEnumerable<StatusEntity>> ListStatusesAsync();
         Task<StatusEntity?> GetStatusByIdAsync(int id);
-        Task<int> CreateStatusAsync(StatusEntity status);
-        Task UpdateStatusByIdAsync(int id, StatusEntity status);
+        Task<int> CreateStatusAsync(StatusRequestDto status);
+        Task UpdateStatusByIdAsync(int id, StatusRequestDto status);
         Task DeleteStatusByIdAsync(int id);
     }
 }

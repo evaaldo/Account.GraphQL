@@ -1,4 +1,6 @@
-﻿using Account.GraphQL.Application.Interfaces.Repository;
+﻿using Account.GraphQL.Api.DTOs.Request;
+using Account.GraphQL.Application.DTOs.Request;
+using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Application.Interfaces.UseCases;
 using Account.GraphQL.Domain.Domain;
 
@@ -7,35 +9,40 @@ namespace Account.GraphQL.Application.UseCases
     public class AccountUseCases : IAccountUseCases
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IPersonUseCases _personUseCases;
 
-        public AccountUseCases(IAccountRepository accountRepository)
+        public AccountUseCases(IAccountRepository accountRepository, IPersonUseCases personUseCases)
         {
             _accountRepository = accountRepository;
+            _personUseCases = personUseCases;
         }
 
-        public Task<IEnumerable<AccountEntity>> ListAccountsAsync()
+        public async Task<IEnumerable<AccountEntity>> ListAccountsAsync()
         {
-            throw new NotImplementedException();
+            return await _accountRepository.ListAccountsAsync();
         }
 
-        public Task<AccountEntity?> GetAccountByIdAsync(int id)
+        public async Task<AccountEntity?> GetAccountByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _accountRepository.GetAccountByIdAsync(id);
         }
 
-        public Task<int> CreateAccountAsync(AccountEntity account)
+        public async Task<int> CreateAccountAsync(AccountRequestDto accountRequest, PersonRequestDto personRequest)
         {
-            throw new NotImplementedException();
+            var personId = await _personUseCases.CreatePersonAsync(personRequest);
+            var accountEntity = new AccountEntity(personId, 10);
+            return await _accountRepository.CreateAccountAsync(accountEntity);
         }
 
-        public Task UpdateAccountByIdAsync(int id, AccountEntity account)
+        public async Task UpdateAccountByIdAsync(int id, AccountRequestDto accountRequest)
         {
-            throw new NotImplementedException();
+            var accountEntity = new AccountEntity(accountRequest.IdPerson, accountRequest.IdStatus);
+            await _accountRepository.UpdateAccountByIdAsync(id, accountEntity);
         }
 
-        public Task DeleteAccountByIdAsync(int id)
+        public async Task DeleteAccountByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            await _accountRepository.DeleteAccountByIdAsync(id);
         }
     }
 }
