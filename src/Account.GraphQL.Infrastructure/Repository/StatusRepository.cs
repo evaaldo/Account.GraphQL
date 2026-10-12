@@ -1,41 +1,70 @@
-﻿using Account.GraphQL.Application.Repository;
+﻿using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Domain.Domain;
+using Account.GraphQL.Infrastructure.ConnectionFactory;
+using Dapper;
 using Npgsql;
 
 namespace Account.GraphQL.Infrastructure.Repository
 {
     public class StatusRepository : IStatusRepository
     {
-        private readonly NpgsqlDataSource _dataSource;
+        private readonly PostgresConnectionFactory _factory;
 
-        public StatusRepository(NpgsqlDataSource dataSource)
+        public StatusRepository(PostgresConnectionFactory factory)
         {
-            _dataSource = dataSource;
+            _factory = factory;
         }
 
-        public Task<IEnumerable<StatusEntity>> ListStatusesAsync()
+        public async Task<IEnumerable<StatusEntity>> ListStatusesAsync()
         {
-            throw new NotImplementedException();
+            var sql = "SELECT * FROM tb_account_status";
+
+            var connection = await GetOpenConnectionAsync();
+
+            return await connection.QueryAsync<StatusEntity>(sql);
         }
 
-        public Task<StatusEntity?> GetStatusByIdAsync(int id)
+        public async Task<StatusEntity?> GetStatusByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var sql = "SELECT * FROM tb_account_status WHERE id = @Id";
+
+            var connection = await GetOpenConnectionAsync();
+
+            return await connection.QueryFirstOrDefaultAsync<StatusEntity>(sql, new { Id = id });
         }
 
-        public Task<int> CreateStatusAsync(StatusEntity status)
+        public async Task<int> CreateStatusAsync(StatusEntity status)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO tb_account_status (status, description) VALUES (@Status, @Description) RETURNING id";
+
+            var connection = await GetOpenConnectionAsync();
+
+            return await connection.QuerySingleAsync<int>(sql, new { status.Status, status.Description });
         }
 
-        public Task UpdateStatusByIdAsync(int id, StatusEntity status)
+        public async Task UpdateStatusByIdAsync(int id, StatusEntity status)
         {
-            throw new NotImplementedException();
+            var sql = "UPDATE tb_account_status SET status = @Status, description = @Description WHERE id = @Id";
+
+            var connection = await GetOpenConnectionAsync();
+
+            await connection.ExecuteAsync(sql, new { Id = id, status.Status, status.Description });
         }
 
-        public Task DeleteStatusByIdAsync(int id)
+        public async Task DeleteStatusByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var sql = "DELETE FROM tb_account_status WHERE id = @Id";
+
+            var connection = await GetOpenConnectionAsync();
+
+            await connection.ExecuteAsync(sql, new { Id = id });
+        }
+
+        private async Task<NpgsqlConnection> GetOpenConnectionAsync()
+        {
+            await using var dataSource = _factory.CreateConnection();
+            using var connection = await dataSource.OpenConnectionAsync();
+            return connection;
         }
     }
 }
