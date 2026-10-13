@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Account.GraphQL.Application.Repository
+namespace Account.GraphQL.Application.Interfaces.Repository
 {
     public interface IStatusRepository
     {

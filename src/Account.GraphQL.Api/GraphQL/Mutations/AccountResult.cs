@@ -1,6 +1,4 @@
-﻿using Account.GraphQL.Api.GraphQL.Types;
-
-namespace Account.GraphQL.Api.GraphQL.Mutations
+﻿namespace Account.GraphQL.Api.GraphQL.Mutations
 {
     public class AccountResult
     {

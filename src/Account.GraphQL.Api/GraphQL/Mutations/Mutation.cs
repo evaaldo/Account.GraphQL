@@ -1,5 +1,4 @@
-﻿using Account.GraphQL.Api.GraphQL.Types;
-using HotChocolate;
+﻿using HotChocolate;
 
 namespace Account.GraphQL.Api.GraphQL.Mutations
 {

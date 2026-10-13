@@ -1,5 +1,4 @@
-﻿using Account.GraphQL.Api.GraphQL.Types;
-using Bogus;
+﻿using Account.GraphQL.Application.Interfaces.UseCases;
 using HotChocolate;
 using HotChocolate.Types;
 
@@ -9,38 +8,21 @@ namespace Account.GraphQL.Api.GraphQL.Queries.AccountQueries
     [GraphQLDescription("Provides queries related to account types.")]
     public class AccountQueries
     {
-        private readonly Faker<AccountType> _accountFaker;
+        private readonly IAccountUseCases _accountUseCases;
 
-        public AccountQueries()
+        public AccountQueries(IAccountUseCases accountUseCases)
         {
-            _accountFaker = new Faker<AccountType>()
-                .RuleFor(a => a.Id, f => f.Random.Guid())
-                .RuleFor(a => a.Name, f => f.Company.CompanyName())
-                .RuleFor(a => a.Number, f => f.Finance.Account())
-                .RuleFor(a => a.Status, f => new StatusType
-                {
-                    Id = f.Random.Guid(),
-                    Name = f.Lorem.Word(),
-                    Description = f.Lorem.Sentence(),
-                    IsActive = f.Random.Bool(),
-                    CreatedAt = f.Date.Past(),
-                    UpdatedAt = f.Date.Past()
-                })
-                .RuleFor(a => a.CreatedAt, f => f.Date.Past())
-                .RuleFor(a => a.UpdatedAt, f => f.Date.Past());
+            _accountUseCases = accountUseCases;
         }
 
-        public IEnumerable<AccountType> GetAccounts()
+        public void GetAccounts()
         {
-            return _accountFaker.Generate(10);
+            throw new NotImplementedException();
         }
 
-        public AccountType GetAccountById(Guid id)
+        public void GetAccountById(Guid id)
         {
-            AccountType account = _accountFaker.Generate();
-            account.Id = id;
-
-            return account;
+            throw new NotImplementedException();
         }
     }
 }

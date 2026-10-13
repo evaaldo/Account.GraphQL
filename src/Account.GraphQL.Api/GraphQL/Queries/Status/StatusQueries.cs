@@ -1,5 +1,5 @@
-﻿using Account.GraphQL.Api.GraphQL.Types;
-using Bogus;
+﻿using Account.GraphQL.Application.DTOs.Response;
+using Account.GraphQL.Application.Interfaces.UseCases;
 using HotChocolate;
 using HotChocolate.Types;
 
@@ -9,22 +9,16 @@ namespace Account.GraphQL.Api.GraphQL.Queries.Status
     [GraphQLDescription("Provides queries related to status types.")]
     public class StatusQueries
     {
-        private readonly Faker<StatusType> _statusFaker;
+        private readonly IStatusUseCases _statusUseCases;
 
-        public StatusQueries()
+        public StatusQueries(IStatusUseCases statusUseCases)
         {
-            _statusFaker = new Faker<StatusType>()
-                .RuleFor(s => s.Id, f => f.Random.Guid())
-                .RuleFor(s => s.Name, f => f.Lorem.Word())
-                .RuleFor(s => s.Description, f => f.Lorem.Sentence())
-                .RuleFor(s => s.IsActive, f => f.Random.Bool())
-                .RuleFor(s => s.CreatedAt, f => f.Date.Past())
-                .RuleFor(s => s.UpdatedAt, f => f.Date.Past());
+            _statusUseCases = statusUseCases;
         }
 
-        public IEnumerable<StatusType> GetStatus()
+        public async Task<IEnumerable<StatusResponseDto>> GetStatus()
         {
-            return _statusFaker.Generate(5);
+            throw new NotImplementedException();
         }
     }
 }

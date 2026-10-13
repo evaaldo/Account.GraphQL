@@ -29,7 +29,7 @@ namespace Account.GraphQL.Domain.Domain
                 throw new ArgumentException("Birthdate cannot be in the future.");
             }
 
-            if (birthdate < DateTime.Now - TimeSpan.FromDays(365 * 18))
+            if (birthdate > DateTime.Now - TimeSpan.FromDays(365 * 18))
             {
                 throw new ArgumentException("Person must be at least 18 years old.");
             }
