@@ -8,6 +8,9 @@ using Account.GraphQL.Application.Interfaces.UseCases;
 using Account.GraphQL.Infrastructure.Repository;
 using Account.GraphQL.Application.UseCases;
 using Account.GraphQL.Api.GraphQL.Queries.Person;
+using Account.GraphQL.Api.GraphQL.Mutations.Person;
+using Account.GraphQL.Api.GraphQL.Mutations.Account;
+using Account.GraphQL.Api.GraphQL.Mutations.Status;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +20,10 @@ builder.Services.AddGraphQLServer()
     .AddTypeExtension<AccountQueries>()
     .AddTypeExtension<StatusQueries>()
     .AddTypeExtension<PersonQueries>()
-    .AddMutationType<Mutation>();
+    .AddMutationType<Mutation>()
+    .AddTypeExtension<AccountMutation>()
+    .AddTypeExtension<StatusMutation>()
+    .AddTypeExtension<PersonMutation>();
 
 builder.Services.AddScoped(_ => new PostgresConnectionFactory(builder.Configuration.GetConnectionString("AccountDatabase")));
 

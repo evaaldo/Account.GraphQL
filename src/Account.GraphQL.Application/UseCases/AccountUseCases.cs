@@ -37,7 +37,10 @@ namespace Account.GraphQL.Application.UseCases
 
         public async Task UpdateAccountByIdAsync(int id, AccountRequestDto accountRequest)
         {
-            var accountEntity = new AccountEntity(accountRequest.IdPerson, accountRequest.IdStatus);
+            var existingAccount = await _accountRepository.GetAccountByIdAsync(id)
+                ?? throw new Exception($"Account with ID {id} not found.");
+
+            var accountEntity = new AccountEntity(existingAccount.IdPerson, accountRequest.IdStatus);
             await _accountRepository.UpdateAccountByIdAsync(id, accountEntity);
         }
 

@@ -16,7 +16,7 @@ namespace Account.GraphQL.Api.GraphQL.Queries.Person
             _personUseCases = personUseCases;
         }
 
-        public async Task<IEnumerable<PersonResponseDto>> ListPersonsAsync()
+        public async Task<IEnumerable<PersonResponseDto>> GetPersonsAsync()
         {
             return await _personUseCases.ListPersonsAsync();
         }
