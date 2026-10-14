@@ -17,9 +17,9 @@ namespace Account.GraphQL.Api.GraphQL.Mutations.Account
             _accountUseCase = accountUseCase;
         }
 
-        public async Task<int> CreateAccount(AccountRequestDto account, PersonRequestDto person)
+        public async Task<int> CreateAccount(AccountRequestDto account)
         {
-            return await _accountUseCase.CreateAccountAsync(account, person);
+            return await _accountUseCase.CreateAccountAsync(account);
         }
 
         public async Task UpdateAccountById(int id, AccountRequestDto account)

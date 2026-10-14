@@ -28,10 +28,10 @@ namespace Account.GraphQL.Application.UseCases
             return await _accountRepository.GetAccountByIdAsync(id);
         }
 
-        public async Task<int> CreateAccountAsync(AccountRequestDto accountRequest, PersonRequestDto personRequest)
+        public async Task<int> CreateAccountAsync(AccountRequestDto accountRequest)
         {
-            var personId = await _personUseCases.CreatePersonAsync(personRequest);
-            var accountEntity = new AccountEntity(personId, 10);
+            var personId = await _personUseCases.CreatePersonAsync(accountRequest.person);
+            var accountEntity = new AccountEntity(personId, accountRequest.IdStatus);
             return await _accountRepository.CreateAccountAsync(accountEntity);
         }
 

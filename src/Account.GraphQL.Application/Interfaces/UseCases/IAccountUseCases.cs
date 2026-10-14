@@ -1,7 +1,6 @@
 ﻿using Account.GraphQL.Api.DTOs.Request;
 using Account.GraphQL.Application.DTOs.Request;
 using Account.GraphQL.Application.DTOs.Response;
-using Account.GraphQL.Domain.Domain;
 
 namespace Account.GraphQL.Application.Interfaces.UseCases
 {
@@ -9,7 +8,7 @@ namespace Account.GraphQL.Application.Interfaces.UseCases
     {
         Task<IEnumerable<AccountResponseDto>> ListAccountsAsync();
         Task<AccountResponseDto?> GetAccountByIdAsync(int id);
-        Task<int> CreateAccountAsync(AccountRequestDto accountRequest, PersonRequestDto personRequest);
+        Task<int> CreateAccountAsync(AccountRequestDto accountRequest);
         Task UpdateAccountByIdAsync(int id, AccountRequestDto accountRequest);
         Task DeleteAccountByIdAsync(int id);
     }
