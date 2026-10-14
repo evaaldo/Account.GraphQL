@@ -1,6 +1,5 @@
 ﻿using Account.GraphQL.Api.DTOs.Request;
 using Account.GraphQL.Application.DTOs.Response;
-using Account.GraphQL.Domain.Domain;
 
 namespace Account.GraphQL.Application.Interfaces.UseCases
 {

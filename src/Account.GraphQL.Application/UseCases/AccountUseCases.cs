@@ -1,5 +1,4 @@
-﻿using Account.GraphQL.Api.DTOs.Request;
-using Account.GraphQL.Application.DTOs.Request;
+﻿using Account.GraphQL.Application.DTOs.Request;
 using Account.GraphQL.Application.DTOs.Response;
 using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Application.Interfaces.UseCases;
