@@ -1,5 +1,6 @@
 ﻿using Account.GraphQL.Api.DTOs.Request;
 using Account.GraphQL.Application.DTOs.Request;
+using Account.GraphQL.Application.DTOs.Response;
 using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Application.Interfaces.UseCases;
 using Account.GraphQL.Domain.Domain;
@@ -17,12 +18,12 @@ namespace Account.GraphQL.Application.UseCases
             _personUseCases = personUseCases;
         }
 
-        public async Task<IEnumerable<AccountEntity>> ListAccountsAsync()
+        public async Task<IEnumerable<AccountResponseDto>> ListAccountsAsync()
         {
             return await _accountRepository.ListAccountsAsync();
         }
 
-        public async Task<AccountEntity?> GetAccountByIdAsync(int id)
+        public async Task<AccountResponseDto?> GetAccountByIdAsync(int id)
         {
             return await _accountRepository.GetAccountByIdAsync(id);
         }

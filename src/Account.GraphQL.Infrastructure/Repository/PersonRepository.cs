@@ -1,4 +1,5 @@
-﻿using Account.GraphQL.Application.Interfaces.Repository;
+﻿using Account.GraphQL.Application.DTOs.Response;
+using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Domain.Domain;
 using Account.GraphQL.Infrastructure.ConnectionFactory;
 using Dapper;
@@ -14,24 +15,24 @@ namespace Account.GraphQL.Infrastructure.Repository
             _factory = factory;
         }
 
-        public async Task<IEnumerable<PersonEntity>> ListPersonsAsync()
+        public async Task<IEnumerable<PersonResponseDto>> ListPersonsAsync()
         {
             var sql = "SELECT * FROM tb_account_person";
 
             await using var dataSource = _factory.CreateConnection();
             await using var connection = await dataSource.OpenConnectionAsync();
 
-            return await connection.QueryAsync<PersonEntity>(sql);
+            return await connection.QueryAsync<PersonResponseDto>(sql);
         }
 
-        public async Task<PersonEntity?> GetPersonByIdAsync(int id)
+        public async Task<PersonResponseDto?> GetPersonByIdAsync(int id)
         {
             var sql = "SELECT * FROM tb_account_person WHERE id = @Id";
 
             await using var dataSource = _factory.CreateConnection();
             await using var connection = await dataSource.OpenConnectionAsync();
 
-            return await connection.QueryFirstOrDefaultAsync<PersonEntity>(sql, new { Id = id });
+            return await connection.QueryFirstOrDefaultAsync<PersonResponseDto>(sql, new { Id = id });
         }
 
         public async Task<int> CreatePersonAsync(PersonEntity person)

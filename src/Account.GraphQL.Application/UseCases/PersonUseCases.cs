@@ -1,4 +1,5 @@
 ﻿using Account.GraphQL.Api.DTOs.Request;
+using Account.GraphQL.Application.DTOs.Response;
 using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Application.Interfaces.UseCases;
 using Account.GraphQL.Domain.Domain;
@@ -14,15 +15,14 @@ namespace Account.GraphQL.Application.UseCases
             _personRepository = personRepository;
         }
 
-        public async Task<IEnumerable<PersonEntity>> ListPersonsAsync()
+        public async Task<IEnumerable<PersonResponseDto>> ListPersonsAsync()
         {
             return await _personRepository.ListPersonsAsync();
         }
 
-        public async Task<PersonEntity?> GetPersonByIdAsync(int id)
+        public async Task<PersonResponseDto?> GetPersonByIdAsync(int id)
         {
-            var person = await _personRepository.GetPersonByIdAsync(id);
-            return person;
+            return await _personRepository.GetPersonByIdAsync(id);
         }
 
         public async Task<int> CreatePersonAsync(PersonRequestDto person)

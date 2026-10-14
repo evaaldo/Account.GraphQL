@@ -1,4 +1,5 @@
-﻿using Account.GraphQL.Application.Interfaces.Repository;
+﻿using Account.GraphQL.Application.DTOs.Response;
+using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Domain.Domain;
 using Account.GraphQL.Infrastructure.ConnectionFactory;
 using Dapper;
@@ -14,24 +15,24 @@ namespace Account.GraphQL.Infrastructure.Repository
             _factory = factory;
         }
 
-        public async Task<IEnumerable<AccountEntity>> ListAccountsAsync()
+        public async Task<IEnumerable<AccountResponseDto>> ListAccountsAsync()
         {
             var sql = "SELECT * FROM tb_account";
 
             await using var dataSource = _factory.CreateConnection();
             await using var connection = await dataSource.OpenConnectionAsync();
 
-            return await connection.QueryAsync<AccountEntity>(sql);
+            return await connection.QueryAsync<AccountResponseDto>(sql);
         }
 
-        public async Task<AccountEntity?> GetAccountByIdAsync(int id)
+        public async Task<AccountResponseDto?> GetAccountByIdAsync(int id)
         {
             var sql = "SELECT * FROM tb_account WHERE id = @Id";
 
             await using var dataSource = _factory.CreateConnection();
             await using var connection = await dataSource.OpenConnectionAsync();
 
-            return await connection.QueryFirstOrDefaultAsync<AccountEntity>(sql, new { Id = id });
+            return await connection.QueryFirstOrDefaultAsync<AccountResponseDto>(sql, new { Id = id });
         }
 
         public async Task<int> CreateAccountAsync(AccountEntity account)

@@ -1,4 +1,5 @@
-﻿using Account.GraphQL.Application.Interfaces.UseCases;
+﻿using Account.GraphQL.Application.DTOs.Response;
+using Account.GraphQL.Application.Interfaces.UseCases;
 using HotChocolate;
 using HotChocolate.Types;
 
@@ -15,14 +16,14 @@ namespace Account.GraphQL.Api.GraphQL.Queries.AccountQueries
             _accountUseCases = accountUseCases;
         }
 
-        public void GetAccounts()
+        public async Task<IEnumerable<AccountResponseDto>> GetAccounts()
         {
-            throw new NotImplementedException();
+            return await _accountUseCases.ListAccountsAsync();
         }
 
-        public void GetAccountById(Guid id)
+        public async Task<AccountResponseDto> GetAccountById(int id)
         {
-            throw new NotImplementedException();
+            return await _accountUseCases.GetAccountByIdAsync(id);
         }
     }
 }
