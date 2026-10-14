@@ -1,4 +1,5 @@
 ﻿using Account.GraphQL.Application.DTOs.Request;
+using Account.GraphQL.Application.DTOs.Response;
 using Account.GraphQL.Application.Interfaces.Repository;
 using Account.GraphQL.Application.Interfaces.UseCases;
 using Account.GraphQL.Domain.Domain;
@@ -14,12 +15,12 @@ namespace Account.GraphQL.Application.UseCases
             _statusRepository = statusRepository;
         }
 
-        public async Task<IEnumerable<StatusEntity>> ListStatusesAsync()
-        {
+        public async Task<IEnumerable<StatusResponseDto>> ListStatusesAsync()
+        {;
             return await _statusRepository.ListStatusesAsync();
         }
 
-        public async Task<StatusEntity?> GetStatusByIdAsync(int id)
+        public async Task<StatusResponseDto?> GetStatusByIdAsync(int id)
         {
             return await _statusRepository.GetStatusByIdAsync(id);
         }

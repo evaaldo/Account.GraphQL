@@ -2,7 +2,6 @@
 using Account.GraphQL.Domain.Domain;
 using Account.GraphQL.Infrastructure.ConnectionFactory;
 using Dapper;
-using Npgsql;
 
 namespace Account.GraphQL.Infrastructure.Repository
 {
@@ -19,7 +18,8 @@ namespace Account.GraphQL.Infrastructure.Repository
         {
             var sql = "SELECT * FROM tb_account";
 
-            var connection = await GetOpenConnectionAsync();
+            await using var dataSource = _factory.CreateConnection();
+            await using var connection = await dataSource.OpenConnectionAsync();
 
             return await connection.QueryAsync<AccountEntity>(sql);
         }
@@ -28,7 +28,8 @@ namespace Account.GraphQL.Infrastructure.Repository
         {
             var sql = "SELECT * FROM tb_account WHERE id = @Id";
 
-            var connection = await GetOpenConnectionAsync();
+            await using var dataSource = _factory.CreateConnection();
+            await using var connection = await dataSource.OpenConnectionAsync();
 
             return await connection.QueryFirstOrDefaultAsync<AccountEntity>(sql, new { Id = id });
         }
@@ -37,7 +38,8 @@ namespace Account.GraphQL.Infrastructure.Repository
         {
             var sql = "INSERT INTO tb_account (id_person, id_status, created_at, updated_at) VALUES (@IdPerson, @IdStatus, @CreatedAt, @UpdatedAt) RETURNING id";
 
-            var connection = await GetOpenConnectionAsync();
+            await using var dataSource = _factory.CreateConnection();
+            await using var connection = await dataSource.OpenConnectionAsync();
 
             return await connection.QuerySingleAsync<int>(sql, new { account.IdPerson, account.IdStatus, account.CreatedAt, account.UpdatedAt });
         }
@@ -46,7 +48,8 @@ namespace Account.GraphQL.Infrastructure.Repository
         {
             var sql = "UPDATE tb_account SET id_status = @IdStatus, updated_at = @UpdatedAt WHERE id = @Id";
 
-            var connection = await GetOpenConnectionAsync();
+            await using var dataSource = _factory.CreateConnection();
+            await using var connection = await dataSource.OpenConnectionAsync();
 
             await connection.ExecuteAsync(sql, new { Id = id, account.IdStatus, account.UpdatedAt });
         }
@@ -55,16 +58,10 @@ namespace Account.GraphQL.Infrastructure.Repository
         {
             var sql = "DELETE FROM tb_account WHERE id = @Id";
 
-            var connection = await GetOpenConnectionAsync();
+            await using var dataSource = _factory.CreateConnection();
+            await using var connection = await dataSource.OpenConnectionAsync();
 
             await connection.ExecuteAsync(sql, new { Id = id });
-        }
-
-        private async Task<NpgsqlConnection> GetOpenConnectionAsync()
-        {
-            await using var dataSource = _factory.CreateConnection();
-            using var connection = await dataSource.OpenConnectionAsync();
-            return connection;
         }
     }
 }

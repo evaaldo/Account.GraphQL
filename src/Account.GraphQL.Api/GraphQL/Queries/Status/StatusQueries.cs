@@ -18,7 +18,7 @@ namespace Account.GraphQL.Api.GraphQL.Queries.Status
 
         public async Task<IEnumerable<StatusResponseDto>> GetStatus()
         {
-            throw new NotImplementedException();
+            return await _statusUseCases.ListStatusesAsync();
         }
     }
 }
