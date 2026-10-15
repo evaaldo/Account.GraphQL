@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.89" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="16.6.8" />
+    <PackageReference Include="Npgsql" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Account.GraphQL.Application\Account.GraphQL.Application.csproj" />
     <ProjectReference Include="..\Account.GraphQL.Domain\Account.GraphQL.Domain.csproj" />
   </ItemGroup>
