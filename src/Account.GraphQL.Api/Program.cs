@@ -1,4 +1,5 @@
 using Account.GraphQL.Api.Bootstrap;
+using Account.GraphQL.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +10,6 @@ builder.Services.AddApplicationDependencies();
 
 var app = builder.Build();
 
-if (!app.Environment.IsProduction())
-{
-    app.MapOpenApi();
-}
-
-app.MapGraphQL();
+app.MapApplicationEndpoints();
 
 app.Run();
