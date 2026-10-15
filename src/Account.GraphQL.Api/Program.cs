@@ -1,42 +1,11 @@
-using Account.GraphQL.Api.GraphQL.Mutations;
-using Account.GraphQL.Api.GraphQL.Queries;
-using Account.GraphQL.Api.GraphQL.Queries.AccountQueries;
-using Account.GraphQL.Api.GraphQL.Queries.Status;
-using Account.GraphQL.Infrastructure.ConnectionFactory;
-using Account.GraphQL.Application.Interfaces.Repository;
-using Account.GraphQL.Application.Interfaces.UseCases;
-using Account.GraphQL.Infrastructure.Repository;
-using Account.GraphQL.Application.UseCases;
-using Account.GraphQL.Api.GraphQL.Queries.Person;
-using Account.GraphQL.Api.GraphQL.Mutations.Person;
-using Account.GraphQL.Api.GraphQL.Mutations.Account;
-using Account.GraphQL.Api.GraphQL.Mutations.Status;
+using Account.GraphQL.Api.Bootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
-builder.Services.AddGraphQLServer()
-    .AddQueryType<Query>()
-    .AddTypeExtension<AccountQueries>()
-    .AddTypeExtension<StatusQueries>()
-    .AddTypeExtension<PersonQueries>()
-    .AddMutationType<Mutation>()
-    .AddTypeExtension<AccountMutation>()
-    .AddTypeExtension<StatusMutation>()
-    .AddTypeExtension<PersonMutation>();
-
-builder.Services.AddScoped(_ => new PostgresConnectionFactory(builder.Configuration.GetConnectionString("AccountDatabase")));
-
-builder.Services.AddScoped<IStatusRepository, StatusRepository>();
-builder.Services.AddScoped<IStatusUseCases, StatusUseCases>();
-
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IAccountUseCases, AccountUseCases>();
-
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<IPersonUseCases, PersonUseCases>();
-
-Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+builder.Services.AddGraphQLConfiguration();
+builder.Services.AddInfrastructureDependencies(builder.Configuration);
+builder.Services.AddApplicationDependencies();
 
 var app = builder.Build();
 

@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Account.GraphQL.Infrastructure\Account.GraphQL.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Bootstrap\" />
-  </ItemGroup>
-
 </Project>
