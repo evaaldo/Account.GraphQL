@@ -1,4 +1,4 @@
-﻿using Account.GraphQL.Api.DTOs.Request;
+﻿using Account.GraphQL.Application.DTOs.Request;
 using Account.GraphQL.Application.Interfaces.UseCases;
 using HotChocolate;
 using HotChocolate.Types;
