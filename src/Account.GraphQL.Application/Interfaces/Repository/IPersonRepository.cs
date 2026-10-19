@@ -7,6 +7,7 @@ namespace Account.GraphQL.Application.Interfaces.Repository
     {
         Task<IEnumerable<PersonResponseDto>> ListPersonsAsync();
         Task<PersonResponseDto?> GetPersonByIdAsync(int id);
+        Task<IEnumerable<PersonResponseDto>> GetPersonsByIdsAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default);
         Task<int> CreatePersonAsync(PersonEntity person);
         Task UpdatePersonByIdAsync(int id, PersonEntity person);
         Task DeletePersonByIdAsync(int id);
