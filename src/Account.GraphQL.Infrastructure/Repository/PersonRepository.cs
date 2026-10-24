@@ -35,6 +35,16 @@ namespace Account.GraphQL.Infrastructure.Repository
             return await connection.QueryFirstOrDefaultAsync<PersonResponseDto>(sql, new { Id = id });
         }
 
+        public async Task<IEnumerable<PersonResponseDto>> GetPersonsByIdsAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default)
+        {
+            var sql = "SELECT * FROM tb_account_person WHERE id = ANY(@Ids)";
+
+            await using var dataSource = _factory.CreateConnection();
+            await using var connection = await dataSource.OpenConnectionAsync(cancellationToken);
+
+            return await connection.QueryAsync<PersonResponseDto>(sql, new { Ids = ids });
+        }
+
         public async Task<int> CreatePersonAsync(PersonEntity person)
         {
             var sql = "INSERT INTO tb_account_person (name, email, birthdate, created_at, updated_at) VALUES (@Name, @Email, @Birthdate, @CreatedAt, @UpdatedAt) RETURNING id";
