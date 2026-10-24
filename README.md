@@ -67,3 +67,7 @@ docker compose down
 ```
 
 PostgreSQL data is stored in a named Docker volume and is retained when the containers stop. The initialization script runs when the database volume is first created.
+
+## Author
+
+Evaldo Rodrigues | evaaldormj@gmail.com | https://www.linkedin.com/in/evaldorodrigues
